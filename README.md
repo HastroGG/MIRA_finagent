@@ -1,20 +1,46 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+##  MIRA: Mali İzleme ve Rehberlik Ağı
 
-# Run and deploy your AI Studio app
+MIRA, geleneksel gider takip uygulamalarının ötesine geçerek, kullanıcıların finansal verilerini anlamlandıran, geleceğe yönelik stratejiler geliştiren ve **Gemini AI** ile kişiselleştirilmiş danışmanlık sunan bir ekosistemdir.
 
-This contains everything you need to run your app locally.
+###  Başlıca Özellikler
 
-View your app in AI Studio: https://ai.studio/apps/2dfd3780-8b61-4f56-8f0e-71ba2dc349be
+-   **Akıllı İşlem Takibi:** SQLite tabanlı hızlı ve güvenilir veritabanı yapısı ile tüm gelir ve giderlerin kategorize edilerek anlık kaydedilmesi.
+    
+-   **Gemini AI Analiz Motoru:** Finansal verilerin yapay zeka tarafından taranarak harcama alışkanlıklarının analiz edilmesi ve iyileştirme önerileri sunulması.
+    
+-   **İnteraktif Veri Görselleştirme:** `recharts` kütüphanesi kullanılarak hazırlanan, geçmiş yılları kapsayan dinamik trend grafikleri ve kategori dağılım haritaları.
+    
+-   **Hedef ve Borç Yönetimi:** Belirlenen finansal hedeflere (ev, araba, tatil vb.) ne kadar yaklaşıldığının takibi ve borç/alacak dengesinin yönetilmesi.
+    
+-   **Anomali Tespiti:** Standart dışı harcamaları (ortalamanın 2.5 katı üzerindeki giderler) otomatik olarak tespit eden akıllı uyarı sistemi.
+    
+-   **Gerçek Zamanlı Piyasa Entegrasyonu:** Güncel döviz kurları (Dolar ,Euro ve Altın) fiyatları ile varlık değerlemesi yapabilme özelliği.
+    
 
-## Run Locally
+----------
 
-**Prerequisites:**  Node.js
+###  Sunduğu Ayrıcalıklar (Neden MIRA?)
 
+1.  **Kişiselleştirilmiş Stratejiler:** AI Studio entegrasyonu sayesinde her kullanıcıya özel, "Yaz Tatili Planı" veya "Araba Birikimi" gibi somut ve uygulanabilir finansal yol haritaları hazırlar.
+    
+2.  **Hız ve Hafiflik:** `better-sqlite3` ve `Vite` kullanımı sayesinde düşük kaynak tüketimi ile çok hızlı bir kullanıcı deneyimi sunar.
+    
+3.  **Güvenli ve Yerel Depolama:** Verilerin kullanıcı kontrolünde, optimize edilmiş bir yerel veritabanında saklanması.
+    
+4.  **Karar Destek Sistemi:** Piyasa verilerini kullanıcı harcamalarıyla birleştirerek, "Altın mı almalıyım yoksa borç mu kapatmalıyım?" gibi sorulara karşılık verir.
+    
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+----------
+
+###  Teknik Yığın (Tech Stack)
+
+-   **Frontend:** React, TypeScript, Tailwind CSS, Recharts, Lucide Icons.
+    
+-   **Backend:** Node.js, Express.js, Tsx.
+    
+-   **Veritabanı:** Better-SQLite3.
+    
+-   **AI:** Google Gemini AI (AI Studio).
+    
+-   **Deployment:** Railway 
+    
