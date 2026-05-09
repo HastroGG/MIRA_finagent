@@ -1,0 +1,90 @@
+{
+  "entities": {
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Financial income or expense transaction",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Unique ID of the user who owns this transaction" },
+        "amount": { "type": "number", "description": "Amount of money" },
+        "type": { "type": "string", "enum": ["gelir", "gider"], "description": "Income or Expense" },
+        "category": { "type": "string", "description": "Category of the transaction" },
+        "timestamp": { "type": "string", "format": "date-time", "description": "When the transaction occurred" }
+      },
+      "required": ["userId", "amount", "type", "category", "timestamp"]
+    },
+    "Goal": {
+      "title": "Financial Goal",
+      "description": "A financial target for the user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "targetAmount": { "type": "number" },
+        "currentAmount": { "type": "number" },
+        "targetDate": { "type": "string", "format": "date" }
+      },
+      "required": ["userId", "title", "targetAmount", "currentAmount", "targetDate"]
+    },
+    "Debt": {
+      "title": "Debt",
+      "description": "Outstanding debt to be paid or received",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "amount": { "type": "number" },
+        "isPaid": { "type": "boolean" },
+        "dueDate": { "type": "string", "format": "date" }
+      },
+      "required": ["userId", "title", "amount", "isPaid", "dueDate"]
+    },
+    "SavingsPlan": {
+      "title": "Savings Plan",
+      "description": "Planned savings for future goals",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "targetAmount": { "type": "number" },
+        "currentAmount": { "type": "number" },
+        "endDate": { "type": "string", "format": "date" }
+      },
+      "required": ["userId", "title", "targetAmount", "currentAmount", "endDate"]
+    },
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "User specific settings and public profile",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["displayName", "email"]
+    }
+  },
+  "firestore": {
+    "transactions": {
+      "schema": "Transaction",
+      "description": "Global transactions collection"
+    },
+    "goals": {
+      "schema": "Goal",
+      "description": "Financial goals collection"
+    },
+    "debts": {
+      "schema": "Debt",
+      "description": "Debts collection"
+    },
+    "plans": {
+      "schema": "SavingsPlan",
+      "description": "Savings plans collection"
+    },
+    "users": {
+      "schema": "UserProfile",
+      "description": "Users profile collection"
+    }
+  }
+}

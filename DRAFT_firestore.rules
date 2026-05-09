@@ -1,0 +1,87 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Auth Helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Transactions
+    match /transactions/{transactionId} {
+      function isValidTransaction(data) {
+        return data.keys().hasAll(['userId', 'amount', 'type', 'category', 'timestamp']) 
+          && data.keys().size() == 5
+          && data.userId == request.auth.uid
+          && data.amount is number
+          && data.type in ['gelir', 'gider']
+          && data.category is string && data.category.size() <= 100
+          && data.timestamp is string;
+      }
+
+      allow create: if isSignedIn() && isValidTransaction(request.resource.data);
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow get, delete: if isSignedIn() && isOwner(resource.data.userId);
+      allow update: if false; // Transactions are usually immutable in this app's logic for now
+    }
+
+    // Goals
+    match /goals/{goalId} {
+      function isValidGoal(data) {
+        return data.keys().hasAll(['userId', 'title', 'targetAmount', 'currentAmount', 'targetDate'])
+          && data.keys().size() == 5
+          && data.userId == request.auth.uid
+          && data.title is string && data.title.size() <= 100
+          && data.targetAmount is number
+          && data.currentAmount is number
+          && data.targetDate is string;
+      }
+
+      allow create: if isSignedIn() && isValidGoal(request.resource.data);
+      allow read, delete: if isSignedIn() && isOwner(resource.data.userId);
+      allow update: if isSignedIn() && isOwner(resource.data.userId) && isValidGoal(request.resource.data)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['currentAmount', 'title', 'targetAmount', 'targetDate']);
+    }
+
+    // Debts
+    match /debts/{debtId} {
+      function isValidDebt(data) {
+        return data.userId == request.auth.uid
+          && data.title is string
+          && data.amount is number;
+      }
+
+      allow create: if isSignedIn() && isValidDebt(request.resource.data);
+      allow read, update, delete: if isSignedIn() && isOwner(resource.data.userId);
+    }
+
+    // Savings Plans
+    match /plans/{planId} {
+      function isValidPlan(data) {
+        return data.userId == request.auth.uid
+          && data.title is string
+          && data.targetAmount is number;
+      }
+
+      allow create: if isSignedIn() && isValidPlan(request.resource.data);
+      allow read, update, delete: if isSignedIn() && isOwner(resource.data.userId);
+    }
+
+    // Users
+    match /users/{userId} {
+      allow read, write: if isSignedIn() && request.auth.uid == userId;
+    }
+  }
+}
