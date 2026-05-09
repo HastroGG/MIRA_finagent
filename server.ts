@@ -17,7 +17,7 @@ async function startServer() {
 
   // --- DATABASE SETUP ---
   const db = new Database("finans.db");
-  db.pragma("journal_mode = WAL");
+  //db.pragma("journal_mode = WAL");
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS islemler (
