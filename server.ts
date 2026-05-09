@@ -10,14 +10,14 @@ const __dirname = path.dirname(__filename);
 
 async function startServer() {
   const app = express();
-  const PORT = process.env.PORT || 3000;
+  const PORT = 3000;
 
   app.use(cors());
   app.use(express.json());
 
   // --- DATABASE SETUP ---
   const db = new Database("finans.db");
-  //db.pragma("journal_mode = WAL");
+  db.pragma("journal_mode = WAL");
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS islemler (
